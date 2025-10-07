@@ -20,6 +20,7 @@ public class PeliculasService {
     private PeliculasEntity convertirAEntity(PeliculasDTO dto){
         PeliculasEntity entity = new PeliculasEntity();
         entity.setId(dto.getId());
+        entity.setTitulo(dto.getTitulo());
         entity.setDirector(dto.getDirector());
         entity.setGenero(dto.getGenero());
         entity.setAnio_estreno(dto.getAnio_estreno());
@@ -31,6 +32,7 @@ public class PeliculasService {
     private PeliculasDTO convertirADTO(PeliculasEntity entity){
         PeliculasDTO json = new PeliculasDTO();
         json.setId(entity.getId());
+        json.setTitulo(entity.getTitulo());
         json.setDirector(entity.getDirector());
         json.setGenero(entity.getGenero());
         json.setAnio_estreno(entity.getAnio_estreno());
@@ -70,13 +72,14 @@ public class PeliculasService {
     public PeliculasDTO updatePelicula(Integer id, PeliculasDTO json){
         try{
             PeliculasEntity entity = repo.findById(id).orElseThrow(() -> new ExceptionFindPeliculas("El id enviado no pertenece a ningun registro"));
+            entity.setTitulo(json.getTitulo());
             entity.setDirector(json.getDirector());
             entity.setGenero(json.getGenero());
             entity.setAnio_estreno(json.getAnio_estreno());
             entity.setDuracion_min(json.getDuracion_min());
             entity.setFecha_creacion(json.getFecha_creacion());
             PeliculasEntity res = repo.save(entity);
-            return convertirADTO((res));
+            return convertirADTO(res);
         } catch (Exception e) {
             log.error("Hubo problemas actualizando la pelicula", e);
             throw new ExceptionUpdatePeliculas("Hubo problemas actualizando la pelicula");

@@ -17,7 +17,6 @@ public class PeliculasDTO {
     private Integer id;
 
     @NotBlank(message = "El titulo de la pelicula no puede quedar en blanco")
-    @UniqueElements(message = "El titulo de la pelicula debe ser unico entre los demas")
     private String titulo;
 
     private String director;
