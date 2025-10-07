@@ -2,16 +2,14 @@ package finalboss.edgarpineda_camilarugamas_B_G1.Controllers;
 
 import finalboss.edgarpineda_camilarugamas_B_G1.Models.DTO.PeliculasDTO;
 import finalboss.edgarpineda_camilarugamas_B_G1.Services.PeliculasService;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
-@Slf4j
 @Controller
 @RequestMapping("/apiPeliculas")
 public class PeliculasController {
@@ -30,4 +28,69 @@ public class PeliculasController {
         return res;
     }
 
+    @PostMapping("/postPelicula")
+    public ResponseEntity<?> crearPelicula(@RequestBody PeliculasDTO json){
+        try {
+            PeliculasDTO dto = service.createPelicula(json);
+            if (dto == null){
+                return ResponseEntity.badRequest().body(Map.of(
+                        "status", "failed",
+                        "message", "Datos invalidos"
+                ));
+            }
+            return ResponseEntity.ok().body(Map.of(
+                    "status", "success",
+                    "data", dto
+            ));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of(
+                    "status", "failed conection",
+                    "message", e.getMessage()
+            ));
+        }
+    }
+
+    @PutMapping("/putPelicula/{id}")
+    public ResponseEntity<?> actualizarPelicula(@PathVariable Integer id, @RequestBody PeliculasDTO json){
+        try {
+            PeliculasDTO dto = service.updatePelicula(id, json);
+            if (dto == null){
+                return ResponseEntity.badRequest().body(Map.of(
+                        "status", "failed",
+                        "message", "Datos invalidos"
+                ));
+            }
+            return ResponseEntity.ok().body(Map.of(
+                    "status", "success",
+                    "data", dto
+            ));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of(
+                    "status", "failed conection",
+                    "message", e.getMessage()
+            ));
+        }
+    }
+
+    @DeleteMapping("/deletePelicula/{id}")
+    public ResponseEntity<?> crearPelicula(@PathVariable Integer id){
+        try {
+            PeliculasDTO dto = service.deletePelicula(id);
+            if (dto == null){
+                return ResponseEntity.badRequest().body(Map.of(
+                        "status", "failed",
+                        "message", "Datos invalidos"
+                ));
+            }
+            return ResponseEntity.ok().body(Map.of(
+                    "status", "success",
+                    "data", dto
+            ));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of(
+                    "status", "failed conection",
+                    "message", e.getMessage()
+            ));
+        }
+    }
 }
