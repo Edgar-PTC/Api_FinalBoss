@@ -16,6 +16,7 @@ public class PeliculasEntity {
     @Id
     @Column(name = "ID_PELICULA", columnDefinition = "NUMBER", nullable = false)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_PELICULAS")
+    @SequenceGenerator(name = "SEQ_PELICULAS", sequenceName = "SEQ_PELICULAS", allocationSize = 1)
     private Integer id;
 
     @Column(name = "TITULO", columnDefinition = "VARCHAR2(200)", nullable = false)
