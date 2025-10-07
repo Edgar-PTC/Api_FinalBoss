@@ -29,6 +29,6 @@ public class PeliculasDTO {
     private Integer duracion_min;
 
     @NotNull(message = "La fecha de creacion de la pelicula no puede quedar vacia")
-    @JsonFormat()
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date fecha_creacion;
 }
